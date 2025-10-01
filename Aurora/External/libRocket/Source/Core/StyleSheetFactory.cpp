@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -117,7 +117,7 @@ StyleSheet* StyleSheetFactory::GetStyleSheet(const StringList& sheets)
 	// Generate a unique key for these sheets
 	String combined_key;
 	for (size_t i = 0; i < sheets.size(); i++)
-	{		
+	{
 		URL path(sheets[i]);
 		combined_key += path.GetFileName();
 	}
@@ -177,7 +177,7 @@ void StyleSheetFactory::ClearStyleSheetCache()
 // Returns one of the available node selectors.
 StyleSheetNodeSelector* StyleSheetFactory::GetSelector(const String& name)
 {
-	size_t index = name.Find("(");
+	uint32_t index = name.Find("(");
 	SelectorMap::iterator i = instance->selectors.find(name.Substring(0, index));
 	if (i == instance->selectors.end())
 		return NULL;

@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -336,7 +336,7 @@ bool StyleSheetNode::IsApplicable(const Element* element) const
 	for (const Element* ancestor_element = element->GetParentNode(); ancestor_element != NULL; ancestor_element = ancestor_element->GetParentNode())
 	{
 		// Skip this ancestor if the name of the next style node doesn't match its tag name, and one was specified.
-		if (!parent_node->name.Empty() 
+		if (!parent_node->name.Empty()
 			&& parent_node->name != ancestor_element->GetTagName())
 			continue;
 
@@ -500,8 +500,8 @@ StyleSheetNode* StyleSheetNode::CreateStructuralChild(const String& child_name)
 	int child_a = 1;
 	int child_b = 0;
 
-	size_t parameter_start = child_name.Find("(");
-	size_t parameter_end = child_name.Find(")");
+	uint32_t parameter_start = child_name.Find("(");
+	uint32_t parameter_end = child_name.Find(")");
 	if (parameter_start != String::npos &&
 		parameter_end != String::npos)
 	{
@@ -521,7 +521,7 @@ StyleSheetNode* StyleSheetNode::CreateStructuralChild(const String& child_name)
 		else
 		{
 			// Alrighty; we've got an equation in the form of [[+/-]an][(+/-)b]. So, foist up, we split on 'n'.
-			size_t n_index = parameters.Find("n");
+			uint32_t n_index = parameters.Find("n");
 			if (n_index != String::npos)
 			{
 				// The equation is 0n + b. So a = 0, and we only have to parse b.

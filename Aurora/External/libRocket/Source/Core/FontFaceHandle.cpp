@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -145,7 +145,7 @@ int FontFaceHandle::GetStringWidth(const WString& string, word prior_character) 
 {
 	int width = 0;
 
-	for (size_t i = 0; i < string.Length(); i++)
+	for (uint32_t i = 0; i < string.Length(); i++)
 	{
 		word character_code = string[i];
 
@@ -323,7 +323,7 @@ void FontFaceHandle::GenerateLine(Geometry* geometry, const Vector2f& position, 
 
 	line_vertices.resize(line_vertices.size() + 4);
 	line_indices.resize(line_indices.size() + 6);
-	GeometryUtilities::GenerateQuad(&line_vertices[0] + (line_vertices.size() - 4), &line_indices[0] + (line_indices.size() - 6), Vector2f(position.x, position.y + offset), Vector2f((float) width, underline_thickness), colour, line_vertices.size() - 4);
+	GeometryUtilities::GenerateQuad(&line_vertices[0] + (line_vertices.size() - 4), &line_indices[0] + (line_indices.size() - 6), Vector2f(position.x, position.y + offset), Vector2f((float) width, underline_thickness), colour, (int)(line_vertices.size() - 4));
 }
 
 // Returns the font face's raw charset (the charset range as a string).

@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -137,7 +137,7 @@ void BaseXMLParser::ReadBody()
 			// Bail if we've hit the end of the XML data.
 			if (open_tag_depth == 0)
 			{
-				xml_source->Seek((read - buffer) - buffer_used, SEEK_CUR);
+				xml_source->Seek((long)((read - buffer) - buffer_used), SEEK_CUR);
 				break;
 			}
 		}
@@ -270,12 +270,12 @@ bool BaseXMLParser::ReadAttributes(XMLAttributes& attributes)
 		String attribute;
 		String value;
 
-		// Get the attribute name		
+		// Get the attribute name
 		if (!FindWord(attribute, "=/>"))
-		{			
+		{
 			return false;
 		}
-		
+
 		// Check if theres an assigned value
 		if (PeekString((const unsigned char*)"="))
 		{
@@ -355,7 +355,7 @@ bool BaseXMLParser::FindWord(String& word, const char* terminators)
 	{
 		if (read >= buffer + buffer_used)
 		{
-			if (!FillBuffer())			
+			if (!FillBuffer())
 				return false;
 		}
 
@@ -434,7 +434,7 @@ bool BaseXMLParser::PeekString(const unsigned char* string, bool consume)
 		// overflow buffer.
 		if ((peek_read - buffer) + i >= buffer_used)
 		{
-			int peek_offset = peek_read - read;
+			int peek_offset = (int)(peek_read - read);
 			FillBuffer();
 			peek_read = read + peek_offset;
 
@@ -442,13 +442,13 @@ bool BaseXMLParser::PeekString(const unsigned char* string, bool consume)
 			{
 				// Wierd, seems our buffer is too small, realloc it bigger.
 				buffer_size *= 2;
-				int read_offset = read - buffer;
+				int read_offset = (int)(read - buffer);
 				buffer = (unsigned char*) realloc(buffer, buffer_size);
 
 				// Restore the read pointers.
 				read = buffer + read_offset;
 				peek_read = read + peek_offset;
-				
+
 				// Attempt to fill our new buffer size.
 				if (!FillBuffer())
 					return false;
@@ -472,7 +472,7 @@ bool BaseXMLParser::PeekString(const unsigned char* string, bool consume)
 
 	// Set the read pointer to the end of the peek.
 	if (consume)
-	{		
+	{
 		read = peek_read;
 	}
 
@@ -491,10 +491,10 @@ bool BaseXMLParser::FillBuffer()
 		memmove(buffer, read, bytes_remaining);
 		bytes_free = buffer_size - bytes_remaining;
 	}
-	
+
 	read = buffer;
 	size_t bytes_read = xml_source->Read(&buffer[bytes_remaining], bytes_free);
-	buffer_used = bytes_read + bytes_remaining;
+	buffer_used = (int)(bytes_read + bytes_remaining);
 
 	return bytes_read > 0;
 }

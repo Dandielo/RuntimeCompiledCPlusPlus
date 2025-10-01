@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -62,7 +62,7 @@ size_t RocketLibSystemFileInterface::Read(void* buffer, size_t size, Rocket::Cor
 }
 
 // Seeks to a point in a previously opened file.
-bool RocketLibSystemFileInterface::Seek(Rocket::Core::FileHandle file, long offset, int origin)
+bool RocketLibSystemFileInterface::Seek(Rocket::Core::FileHandle file, size_t offset, int origin)
 {
 	return fseek((FILE*) file, offset, origin) == 0;
 }

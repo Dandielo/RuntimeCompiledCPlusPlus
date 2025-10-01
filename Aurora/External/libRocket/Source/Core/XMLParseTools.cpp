@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -40,7 +40,7 @@ namespace Core {
 // NOTE: tag *MUST* be in lowercase
 const char* XMLParseTools::FindTag(const char* tag, const char* string, bool closing_tag)
 {
-	int length = strlen(tag);
+	uint32_t length = (uint32_t) strlen(tag);
 	const char* ptr = string;
 	bool found_closing = false;
 
@@ -77,7 +77,7 @@ const char* XMLParseTools::FindTag(const char* tag, const char* string, bool clo
 }
 
 bool XMLParseTools::ReadAttribute(const char* &string, String& name, String& value)
-{		
+{
 	const char* ptr = string;
 
 	name = "";
@@ -94,12 +94,12 @@ bool XMLParseTools::ReadAttribute(const char* &string, String& name, String& val
 		if (StringUtilities::IsWhitespace(*ptr))
 			found_whitespace = true;
 		else
-			name += *ptr;	
+			name += *ptr;
 		ptr++;
 	}
 	if (*ptr == '>')
 		return false;
-	
+
 	// If we stopped on an equals, parse the value
 	if (*ptr == '=')
 	{
@@ -119,7 +119,7 @@ bool XMLParseTools::ReadAttribute(const char* &string, String& name, String& val
 		while (*ptr != '\'' && *ptr != '"' && *ptr != '>' && (*ptr != ' ' || quoted))
 		{
 			value += *ptr++;
-		}	
+		}
 		if (*ptr == '>')
 			return false;
 
@@ -139,7 +139,7 @@ bool XMLParseTools::ReadAttribute(const char* &string, String& name, String& val
 }
 
 Element* XMLParseTools::ParseTemplate(Element* element, const String& template_name)
-{	
+{
 	// Load the template, and parse it
 	Template* parse_template = TemplateCache::GetTemplate(template_name);
 	if (!parse_template)

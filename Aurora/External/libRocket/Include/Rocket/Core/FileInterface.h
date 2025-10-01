@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -70,7 +70,7 @@ public:
 	/// @param offset The number of bytes to seek.
 	/// @param origin One of either SEEK_SET (seek from the beginning of the file), SEEK_END (seek from the end of the file) or SEEK_CUR (seek from the current file position).
 	/// @return True if the operation completed successfully, false otherwise.
-	virtual bool Seek(FileHandle file, long offset, int origin) = 0;
+	virtual bool Seek(FileHandle file, size_t offset, int origin) = 0;
 	/// Returns the current position of the file pointer.
 	/// @param file The handle of the file to be queried.
 	/// @return The number of bytes from the origin of the file.

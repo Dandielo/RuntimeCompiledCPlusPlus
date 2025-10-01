@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -257,7 +257,7 @@ void* FontDatabase::LoadFace(const String& file_name)
 		return NULL;
 	}
 
-	size_t length = file_interface->Length(handle);
+	uint32_t length = (uint32_t) file_interface->Length(handle);
 
 	FT_Byte* buffer = new FT_Byte[length];
 	file_interface->Read(buffer, length, handle);

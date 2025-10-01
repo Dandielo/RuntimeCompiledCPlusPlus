@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -70,7 +70,7 @@ size_t Stream::Peek(void* buffer, size_t bytes) const
 {
 	size_t pos = Tell();
 	size_t read = Read( buffer, bytes );
-	Seek( pos, SEEK_SET );
+	Seek( (long) pos, SEEK_SET );
 	return read;
 }
 
@@ -93,11 +93,11 @@ size_t Stream::Read(Stream* stream, size_t bytes) const
 // Read from one stream into another
 size_t Stream::Read(String& string, size_t bytes) const
 {
-	size_t string_size = string.Length();
-	string.Resize(string_size + bytes + 1);
+	uint32_t string_size = string.Length();
+	string.Resize((uint32_t)(string_size + bytes + 1));
 	size_t read = Read(&string[string_size], bytes);
-	string[string_size + read] = '\0';
-	string.Resize(string_size + read);
+	string[(uint32_t)(string_size + read)] = '\0';
+	string.Resize((uint32_t)(string_size + read));
 	return read;
 }
 
@@ -126,11 +126,11 @@ size_t Stream::PushFront(const void* ROCKET_UNUSED(buffer), size_t ROCKET_UNUSED
 
 // Push onto the back of the stream
 size_t Stream::PushBack(const void* buffer, size_t bytes)
-{	
+{
 	size_t pos = Tell();
 	Seek(0, SEEK_END);
 	size_t wrote = Write(buffer, bytes);
-	Seek(pos, SEEK_SET);
+	Seek((long)pos, SEEK_SET);
 	return wrote;
 }
 

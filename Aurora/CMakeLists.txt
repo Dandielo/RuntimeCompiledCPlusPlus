@@ -44,7 +44,7 @@ install(DIRECTORY RuntimeObjectSystem/ DESTINATION ${CMAKE_INSTALL_PREFIX}/inclu
 	FILES_MATCHING PATTERN "*.h")
 install(DIRECTORY RuntimeCompiler/ DESTINATION ${CMAKE_INSTALL_PREFIX}/include/RuntimeCompiler
 	FILES_MATCHING PATTERN "*.h")
-install(TARGETS RuntimeObjectSystem RuntimeCompiler 
+install(TARGETS RuntimeObjectSystem RuntimeCompiler
 	DESTINATION ${CMAKE_INSTALL_PREFIX}/lib/)
 
 if(BUILD_EXAMPLES)
@@ -57,26 +57,26 @@ if(BUILD_EXAMPLES)
 	add_executable(ConsoleExample ${ConsoleExample_SRCS})
 	target_link_libraries(ConsoleExample RuntimeCompiler RuntimeObjectSystem)
 
-	
+
 	find_package(OpenGL)
 	if(OpenGL_FOUND)
 		#
 		# Renderer
 		#
-	
+
 		add_library(Renderer ${BUILD_TYPE} ${Renderer_SRCS})
 		target_link_libraries(Renderer ${OPENGL_LIBRARIES} ${ASSIMP_LIBRARIES})
-	
+
 		#
 		# Systems
 		#
-	
+
 		add_library(Systems ${BUILD_TYPE} ${Systems_SRCS})
-		
+
 		#
 		# Freetype WIN32
 		#
-	
+
 		if(WIN32)
 			set(FREETYPE_INCLUDE_DIR_freetype2 ${CMAKE_SOURCE_DIR}/External/support/freetype/include/freetype)
 			set(FREETYPE_INCLUDE_DIR_ft2build ${CMAKE_SOURCE_DIR}/External/support/freetype/include)
@@ -92,7 +92,7 @@ if(BUILD_EXAMPLES)
 			MARK_AS_ADVANCED(ZLIB_LIBRARY)
 			set(FREETYPE_LIBRARY ${CMAKE_SOURCE_DIR}/External/support/lib/MacOSX/libfreetype.a ${ZLIB_LIBRARY})
 		endif()
-	
+
 		#
 		# glfw
 		#
@@ -117,11 +117,11 @@ if(BUILD_EXAMPLES)
 				endif()
 			endif()
 		endif()
-	
+
 		#
 		# assimp
 		#
-	
+
 		if(WIN32)
 			add_library( assimp STATIC IMPORTED )
 			set(ASSIMP_LIBRARIES assimp)
@@ -140,14 +140,14 @@ if(BUILD_EXAMPLES)
 				endforeach( OUTPUTCONFIG CMAKE_CONFIGURATION_TYPES )
 			endif()
 		endif()
-	
+
 		#
 		# SimpleTest
 		#
-	
+
 		add_subdirectory(External/libRocket/Build)
 		include_directories(
-			${OPENGL_INCLUDE_DIR} 
+			${OPENGL_INCLUDE_DIR}
 			External/libRocket/Include
 			External/assimp/include
 		)
@@ -156,20 +156,22 @@ if(BUILD_EXAMPLES)
 		else()
 			add_executable(SimpleTest ${SimpleTest_SRCS})
 		endif()
-		target_link_libraries(SimpleTest 
-				RuntimeCompiler 
-				RuntimeObjectSystem 
+		target_link_libraries(SimpleTest
+				RuntimeCompiler
+				RuntimeObjectSystem
 				Renderer
 				Systems
-				RocketCore 
-				RocketControls 
+				RocketCore
+				RocketControls
 				RocketDebugger
-				${OPENGL_LIBRARIES} 
+				${OPENGL_LIBRARIES}
 				${GLFW_LIBRARIES}
 				${ASSIMP_LIBRARIES}
 			)
 		if(MSVC)
 			set_target_properties(SimpleTest ConsoleExample PROPERTIES COMPILE_FLAGS "/FC /utf-8")
+			# Disable security warnings on Windows for SimpleTest (usage of strcpy)
+			set_target_properties(SimpleTest Systems PROPERTIES COMPILE_FLAGS "-D_CRT_SECURE_NO_WARNINGS")
 		else()
 			add_compile_definitions(COMPILE_PATH="${CMAKE_BINARY_DIR}")
 		endif()

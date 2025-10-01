@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -40,7 +40,7 @@ FileInterfaceDefault::~FileInterfaceDefault()
 // Opens a file.
 FileHandle FileInterfaceDefault::Open(const String& path)
 {
-	return (FileHandle)fopen(path.CString(), "rb");	
+	return (FileHandle)fopen(path.CString(), "rb");
 }
 
 // Closes a previously opened file.
@@ -56,9 +56,9 @@ size_t FileInterfaceDefault::Read(void* buffer, size_t size, FileHandle file)
 }
 
 // Seeks to a point in a previously opened file.
-bool FileInterfaceDefault::Seek(FileHandle file, long offset, int origin)
+bool FileInterfaceDefault::Seek(FileHandle file, size_t offset, int origin)
 {
-	return fseek((FILE*) file, offset, origin) == 0;
+	return fseek((FILE*) file, (long) offset, origin) == 0;
 }
 
 // Returns the current position of the file pointer.

@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -50,7 +50,7 @@ bool SystemInterface::LogMessage(Log::Type logtype, const String& message)
 #ifdef ROCKET_PLATFORM_WIN32
 	if (logtype == Log::LT_ASSERT)
 	{
-		Core::String message(1024, "%s\nWould you like to interrupt execution?", message.CString());	
+		Core::String message(1024, "%s\nWould you like to interrupt execution?", message.CString());
 
 		// Return TRUE if the user presses NO (continue execution)
 		return (IDNO == MessageBoxA(NULL, message.CString(), "Assertion Failure", MB_YESNO | MB_ICONSTOP | MB_DEFBUTTON2 | MB_TASKMODAL));
@@ -67,7 +67,7 @@ bool SystemInterface::LogMessage(Log::Type logtype, const String& message)
 #else
 	(logtype);
 	fprintf(stderr,"%s\n", message.CString());
-#endif	
+#endif
 	return true;
 }
 
@@ -100,7 +100,7 @@ void SystemInterface::JoinPath(String& translated_path, const String& document_p
 	// Strip off the referencing document name.
 	translated_path = document_path;
 	translated_path = translated_path.Replace("\\", "/");
-	size_t file_start = translated_path.RFind("/");
+	uint32_t file_start = translated_path.RFind("/");
 	if (file_start != String::npos)
 		translated_path.Resize(file_start + 1);
 	else
@@ -110,14 +110,14 @@ void SystemInterface::JoinPath(String& translated_path, const String& document_p
 	URL url(translated_path.Replace(":", "|") + path.Replace("\\", "/"));
 	translated_path = url.GetPathedFileName().Replace("|", ":");
 }
-	
+
 // Activate keyboard (for touchscreen devices)
-void SystemInterface::ActivateKeyboard() 
+void SystemInterface::ActivateKeyboard()
 {
 }
-	
+
 // Deactivate keyboard (for touchscreen devices)
-void SystemInterface::DeactivateKeyboard() 
+void SystemInterface::DeactivateKeyboard()
 {
 }
 

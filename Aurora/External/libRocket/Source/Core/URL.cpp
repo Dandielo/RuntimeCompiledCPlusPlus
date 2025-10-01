@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -109,7 +109,7 @@ bool URL::SetURL(const String& _url)
 	if (host_begin != _url.CString())
 	{
 		// Find the host. This is the string appearing after the protocol or after
-		// the username:password combination, and terminated either with a colon, 
+		// the username:password combination, and terminated either with a colon,
 		// if a port is specified, or a forward slash if there is no port.
 
 		// Check for a login pair
@@ -117,7 +117,7 @@ bool URL::SetURL(const String& _url)
 		if ( at_symbol )
 		{
 			String login_password;
-			login_password.Assign( host_begin, at_symbol );			
+			login_password.Assign( host_begin, at_symbol );
 			host_begin = at_symbol + 1;
 
 			const char* password_ptr = strchr( login_password.CString(), ':' );
@@ -177,7 +177,7 @@ bool URL::SetURL(const String& _url)
 	{
 		path_begin = _url.CString();
 	}
-	
+
 	// Check for parameters
 	String path_segment;
 	const char* parameters = strchr(path_begin, '?');
@@ -186,7 +186,7 @@ bool URL::SetURL(const String& _url)
 		// Pull the path segment out, so further processing doesn't read the parameters
 		path_segment.Assign(path_begin, parameters);
 		path_begin = path_segment.CString();
-		
+
 		// Loop through all parameters, loading them
 		StringList parameter_list;
 		StringUtilities::ExpandString( parameter_list, parameters + 1, '&' );
@@ -195,7 +195,7 @@ bool URL::SetURL(const String& _url)
 			// Split into key and value
 			StringList key_value;
 			StringUtilities::ExpandString( key_value, parameter_list[i], '=' );
-			
+
 			if ( key_value.size() == 2 )
 				this->parameters[key_value[0]] = key_value[1];
 			else
@@ -219,12 +219,12 @@ bool URL::SetURL(const String& _url)
 		path.Assign(path_begin, ++file_name_begin);
 
 		// Normalise the path, stripping any ../'s from it
-		size_t parent_dir_pos = String::npos;
+		uint32_t parent_dir_pos = String::npos;
 		while ((parent_dir_pos = path.Find("/..")) != String::npos)
 		{
 			// If we found a /.. we should be able to find the start of the parent
 			// directory, if we can't something wierd has happend, bail
-			size_t parent_dir_start_pos = path.RFind("/", parent_dir_pos);
+			uint32_t parent_dir_start_pos = path.RFind("/", parent_dir_pos);
 			if (parent_dir_start_pos == String::npos)
 				break;
 
@@ -250,7 +250,7 @@ bool URL::SetURL(const String& _url)
 		file_name.Assign(file_name_begin, extension_begin);
 		extension = extension_begin + 1;
 	}
-	
+
 	return true;
 }
 
@@ -259,7 +259,7 @@ const String& URL::GetURL() const
 {
 	if (url_dirty)
 		ConstructURL();
-	
+
 	return url;
 }
 
@@ -426,36 +426,36 @@ void URL::ClearParameters()
 String URL::GetPathedFileName() const
 {
 	String pathed_file_name = path;
-	
+
 	// Append the file name.
 	pathed_file_name += file_name;
-	
+
 	// Append the extension.
 	if (!extension.Empty())
 	{
 		pathed_file_name.Append(".");
 		pathed_file_name += extension;
 	}
-	
+
 	return pathed_file_name;
 }
 
 String URL::GetQueryString() const
 {
 	String query_string;
-	
+
 	int count = 0;
 	for ( Parameters::const_iterator itr = parameters.begin(); itr != parameters.end(); ++itr )
 	{
 		query_string += ( count == 0 ) ? "" : "&";
-		
+
 		query_string += (*itr).first;
 		query_string += "=";
 		query_string += (*itr).second;
-		
+
 		count++;
 	}
-	
+
 	return query_string;
 }
 
@@ -466,7 +466,7 @@ bool URL::operator<(const URL& rhs) const
 		ConstructURL();
 	if (rhs.url_dirty)
 		rhs.ConstructURL();
-	
+
 	return url < rhs.url;
 }
 
@@ -475,7 +475,7 @@ void URL::ConstructURL() const
 	url = "";
 
 	// Append the protocol.
-	if (!protocol.Empty())	
+	if (!protocol.Empty())
 	{
 		url = protocol;
 		url.Append("://");
@@ -486,7 +486,7 @@ void URL::ConstructURL() const
 	{
 		url.Append( login );
 		if (!password.Empty())
-		{		
+		{
 			url.Append( ":" );
 			url.Append( password );
 		}
@@ -496,10 +496,10 @@ void URL::ConstructURL() const
 
 	// Append the host.
 	url += host;
-	
+
 	// Only check ports if there is some host/protocol part
 	if ( !url.Empty() )
-	{		
+	{
 		if (port > 0)
 		{
 			ROCKET_ASSERTMSG( !host.Empty(), "Can't have a port without a host!" );
@@ -528,14 +528,14 @@ void URL::ConstructURL() const
 		url.Append(".");
 		url += extension;
 	}
-	
+
 	// Append parameters
 	if (!parameters.empty())
 	{
 		url += "?";
-		url += GetQueryString();		
+		url += GetQueryString();
 	}
-	
+
 	url_dirty = false;
 }
 

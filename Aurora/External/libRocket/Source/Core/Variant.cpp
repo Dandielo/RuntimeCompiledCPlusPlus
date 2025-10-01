@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,9 +34,9 @@ namespace Core {
 Variant::Variant() : type(NONE)
 {
 	// Make sure our object size assumptions fit inside the static buffer
-	ROCKET_STATIC_ASSERT(sizeof(Colourb) <= LOCAL_DATA_SIZE, LOCAL_DATA_TOO_SMALL_FOR_Colourb);
-	ROCKET_STATIC_ASSERT(sizeof(Colourf) <= LOCAL_DATA_SIZE, LOCAL_DATA_TOO_SMALL_FOR_Colourf);
-	ROCKET_STATIC_ASSERT(sizeof(String) <= LOCAL_DATA_SIZE, LOCAL_DATA_TOO_SMALL_FOR_String);
+	static_assert(sizeof(Colourb) <= LOCAL_DATA_SIZE, "LOCAL_DATA_TOO_SMALL_FOR_Colourb");
+	static_assert(sizeof(Colourf) <= LOCAL_DATA_SIZE, "LOCAL_DATA_TOO_SMALL_FOR_Colourf");
+	static_assert(sizeof(String) <= LOCAL_DATA_SIZE, "LOCAL_DATA_TOO_SMALL_FOR_String");
 }
 
 Variant::Variant( const Variant& copy ) : type(NONE)
@@ -44,7 +44,7 @@ Variant::Variant( const Variant& copy ) : type(NONE)
 	Set(copy);
 }
 
-Variant::~Variant() 
+Variant::~Variant()
 {
 	Clear();
 }
@@ -52,8 +52,8 @@ Variant::~Variant()
 void Variant::Clear()
 {
 	// Free any allocated types.
-	switch (type) 
-	{      
+	switch (type)
+	{
 		case STRING:
 		{
 			// Clean up the string.
@@ -61,7 +61,7 @@ void Variant::Clear()
 			string->~String();
 		}
 		break;
-			
+
 		default:
 		break;
 	}
@@ -89,11 +89,11 @@ void Variant::Set(const Variant& copy)
 			Set(*(String*)copy.data);
 		}
 		break;
-			
+
 		default:
 			Clear();
 			memcpy(data, copy.data, LOCAL_DATA_SIZE);
-		break;	
+		break;
 	}
 	type = copy.type;
 }
@@ -122,7 +122,7 @@ void Variant::Set(const int value)
 	SET_VARIANT(int);
 }
 
-void Variant::Set(const String& value) 
+void Variant::Set(const String& value)
 {
 	if (type == STRING)
 	{
@@ -138,15 +138,15 @@ void Variant::Set(const String& value)
 void Variant::Set(const word value)
 {
 	type = WORD;
-	SET_VARIANT(word);  
+	SET_VARIANT(word);
 }
 
-void Variant::Set(const char* value) 
+void Variant::Set(const char* value)
 {
 	Set(String(value));
 }
 
-void Variant::Set(void* voidptr) 
+void Variant::Set(void* voidptr)
 {
 	type = VOIDPTR;
 	memcpy(data, &voidptr, sizeof(void*));
@@ -170,7 +170,7 @@ void Variant::Set(const Colourb& value)
 	SET_VARIANT(Colourb);
 }
 
-void Variant::Set(ScriptInterface* value) 
+void Variant::Set(ScriptInterface* value)
 {
 	type = SCRIPTINTERFACE;
 	memcpy(data, &value, sizeof(ScriptInterface*));

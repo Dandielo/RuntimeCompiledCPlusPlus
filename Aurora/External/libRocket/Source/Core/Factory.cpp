@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -211,7 +211,7 @@ Element* Factory::InstanceElement(Element* parent, const String& instancer_name,
 
 	if (instancer)
 	{
-		Element* element = instancer->InstanceElement(parent, tag, attributes);		
+		Element* element = instancer->InstanceElement(parent, tag, attributes);
 
 		// Process the generic attributes and bind any events
 		if (element)
@@ -254,7 +254,7 @@ bool Factory::InstanceElementText(Element* parent, const String& text)
 	{
 		// Check if this text node contains only white-space; if so, we don't want to construct it.
 		bool only_white_space = true;
-		for (size_t i = 0; i < translated_data.Length(); ++i)
+		for (uint32_t i = 0; i < translated_data.Length(); ++i)
 		{
 			if (!StringUtilities::IsWhitespace(translated_data[i]))
 			{

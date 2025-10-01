@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -98,7 +98,7 @@ Element::Element(const String& _tag) : absolute_offset(0, 0), relative_offset_ba
 	stacking_context_dirty = false;
 
 	font_face_handle = NULL;
-	
+
 	clipping_ignore_depth = 0;
 	clipping_enabled = false;
 	clipping_state_dirty = true;
@@ -113,7 +113,7 @@ Element::Element(const String& _tag) : absolute_offset(0, 0), relative_offset_ba
 
 Element::~Element()
 {
-	ROCKET_ASSERT(parent == NULL);	
+	ROCKET_ASSERT(parent == NULL);
 
 	PluginRegistry::NotifyElementDestroy(this);
 
@@ -273,7 +273,7 @@ String Element::GetAddress(bool include_pseudo_classes) const
 
 	if (include_pseudo_classes)
 	{
-		const PseudoClassList& pseudo_classes = style->GetActivePseudoClasses();		
+		const PseudoClassList& pseudo_classes = style->GetActivePseudoClasses();
 		for (PseudoClassList::const_iterator i = pseudo_classes.begin(); i != pseudo_classes.end(); ++i)
 		{
 			address += ":";
@@ -514,7 +514,7 @@ bool Element::SetProperty(const String& name, const Property& property)
 // Returns one of this element's properties.
 const Property* Element::GetProperty(const String& name)
 {
-	return style->GetProperty(name);	
+	return style->GetProperty(name);
 }
 
 // Returns one of this element's properties.
@@ -626,7 +626,7 @@ void Element::SetAttributes(const ElementAttributes* _attributes)
 	AttributeNameList changed_attributes;
 
 	while (_attributes->Iterate(index, key, value))
-	{		
+	{
 		changed_attributes.insert(key);
 		attributes.Set(key, *value);
 	}
@@ -795,7 +795,7 @@ ElementDocument* Element::GetOwnerDocument()
 {
 	if (parent == NULL)
 		return NULL;
-	
+
 	if (!owner_document)
 	{
 		owner_document = parent->GetOwnerDocument();
@@ -1083,7 +1083,7 @@ void Element::InsertBefore(Element* child, Element* adjacent_element)
 	else
 	{
 		AppendChild(child);
-	}	
+	}
 }
 
 // Replaces the second node with the first node.
@@ -1238,25 +1238,25 @@ ElementScroll* Element::GetElementScroll() const
 {
 	return scroll;
 }
-	
+
 int Element::GetClippingIgnoreDepth()
 {
 	if (clipping_state_dirty)
 	{
 		IsClippingEnabled();
 	}
-	
+
 	return clipping_ignore_depth;
 }
-	
+
 bool Element::IsClippingEnabled()
 {
 	if (clipping_state_dirty)
 	{
 		// Is clipping enabled for this element, yes unless both overlow properties are set to visible
-		clipping_enabled = style->GetProperty(OVERFLOW_X)->Get< int >() != OVERFLOW_VISIBLE 
+		clipping_enabled = style->GetProperty(OVERFLOW_X)->Get< int >() != OVERFLOW_VISIBLE
 							|| style->GetProperty(OVERFLOW_Y)->Get< int >() != OVERFLOW_VISIBLE;
-		
+
 		// Get the clipping ignore depth from the clip property
 		clipping_ignore_depth = 0;
 		const Property* clip_property = GetProperty(CLIP);
@@ -1264,10 +1264,10 @@ bool Element::IsClippingEnabled()
 			clipping_ignore_depth = clip_property->Get< int >();
 		else if (clip_property->Get< int >() == CLIP_NONE)
 			clipping_ignore_depth = -1;
-		
+
 		clipping_state_dirty = false;
 	}
-	
+
 	return clipping_enabled;
 }
 
@@ -1501,7 +1501,7 @@ void Element::OnPropertyChange(const PropertyNameList& changed_properties)
 		else if (new_font_face_handle != NULL)
 			new_font_face_handle->RemoveReference();
 	}
-	
+
 	// Check for clipping state changes
 	if (changed_properties.find(CLIP) != changed_properties.end() ||
 		changed_properties.find(OVERFLOW_X) != changed_properties.end() ||
@@ -1608,9 +1608,9 @@ void Element::GetRML(String& content)
 	int index = 0;
 	String name;
 	String value;
-	while (IterateAttributes(index, name, value))	
+	while (IterateAttributes(index, name, value))
 	{
-		size_t length = name.Length() + value.Length() + 8;
+		uint32_t length = name.Length() + value.Length() + 8;
 		String attribute(length, " %s=\"%s\"", name.CString(), value.CString());
 		content.Append(attribute);
 	}
@@ -1632,7 +1632,7 @@ void Element::GetRML(String& content)
 }
 
 void Element::SetParent(Element* _parent)
-{	
+{
 	// If there's an old parent, detach from it first.
 	if (parent &&
 		parent != _parent)
@@ -1823,7 +1823,7 @@ void Element::DirtyStructure()
 {
 	// Clear the cached owner document
 	owner_document = NULL;
-	
+
 	// Inform all children that the structure is drity
 	for (size_t i = 0; i < children.size(); ++i)
 	{

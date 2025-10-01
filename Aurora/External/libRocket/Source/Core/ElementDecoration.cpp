@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -199,7 +199,7 @@ bool ElementDecoration::IterateDecorators(int& index, PseudoClassList& pseudo_cl
 		// This is the one we're looking for.
 		name = index_iterator->first;
 
-		int relative_index = index - count;
+		int relative_index = (int)(index - count);
 		pseudo_classes = decorator_index_list[relative_index].first;
 
 		const DecoratorHandle& decorator_handle = decorators[decorator_index_list[relative_index].second];

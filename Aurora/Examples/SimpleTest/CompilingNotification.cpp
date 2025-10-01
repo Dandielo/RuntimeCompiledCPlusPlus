@@ -63,14 +63,14 @@ public:
 		}
 	}
 
-	virtual void Serialize(ISimpleSerializer *pSerializer) 
+	virtual void Serialize(ISimpleSerializer *pSerializer)
 	{
 		IEntityObject::Serialize(pSerializer);
 		SERIALIZE(m_fTimeToNextUpdate);
 		SERIALIZE(m_CompilationStatus);
 	}
 
-	
+
 	// IEntityObject
 
 	virtual void Init( bool isFirstInit )
@@ -90,12 +90,12 @@ public:
 	// flashcolour (bool false = red, true = green);
 	void StrCpyFlashDivStartRML( char* text, float flashAmount, bool flashColour )
 	{
-		
+
 		if( flashAmount < 0.0f )
 		{
 			flashAmount = 0.0f;
 		}
-		
+
 		int red = 0;
 		int green = 0;
 		int blue = 0;
@@ -148,7 +148,7 @@ public:
 			// Refreshing the content of the counter is not itself free, so we impose some limit
 			// Since deltaTime is game time, which can be paused or slowed down, we update with frame time
 			double fSmoothFrameTime = PerModuleInterface::g_pSystemTable->pTimeSystem->GetSmoothFrameDuration();
-			m_fTimeToNextUpdate -= fSmoothFrameTime;
+			m_fTimeToNextUpdate -= (float)(fSmoothFrameTime);
 
 			bool bCompiling = PerModuleInterface::g_pSystemTable->pRuntimeObjectSystem->GetIsCompiling();
 			bool bLoadedModule = PerModuleInterface::g_pSystemTable->pRuntimeObjectSystem->GetLastLoadModuleSuccess();
@@ -251,7 +251,7 @@ public:
 					else
 					{
 						break;
-					} 
+					}
 				default:;
 			}
 		}
@@ -261,7 +261,7 @@ public:
 
 	// IFileChangeListener
 
-	virtual void OnFileChange(const IAUDynArray<const char*>& filelist) 
+	virtual void OnFileChange(const IAUDynArray<const char*>& filelist)
 	{
 		// Reload RML document and clear RCSS cache
 		InitDocument(true);
@@ -314,7 +314,7 @@ private:
 		{
 			pDocument->Show();
 			m_pCompilingNotification = pDocument->Element()->GetElementById("compiling");
-			
+
 			pDocument->RemoveReference();
 		}
 	}

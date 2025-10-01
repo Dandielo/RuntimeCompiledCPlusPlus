@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -69,13 +69,13 @@ ROCKETCORE_API float Cos(float angle)
 // Calculates the arc-cosine of an value.
 ROCKETCORE_API float ACos(float value)
 {
-	return acos(value);
+	return acosf(value);
 }
 
 // Calculates the sine of an angle.
 ROCKETCORE_API float Sin(float angle)
 {
-	return sin(angle);
+	return sinf(angle);
 }
 
 // Calculates the arc-sine of an value.
@@ -154,7 +154,7 @@ ROCKETCORE_API int RealToInteger(float value)
 		mov  edx, 4278190080;	// clear reg edx;
 		and  eax, edx;			// and acc to retrieve the exponent
 		shr  eax, 24;
-		sub  eax, 7fh;			// subtract 7fh(127) to get the actual power 
+		sub  eax, 7fh;			// subtract 7fh(127) to get the actual power
 		mov  edx, eax;			// save acc val power
 		mov  eax, ebx;			// retrieve from ebx
 		rcl  eax, 8;			// trim the left 8 bits that contain the power
@@ -165,7 +165,7 @@ ROCKETCORE_API int RealToInteger(float value)
 		cmp  ecx, 0;
 		je   loop2;
 		shr  eax, 1;
-		or   eax, 80000000h;        
+		or   eax, 80000000h;
 	loop1:
 		shr  eax, 1;			// shift (total bits - power bits);
 		sub  ecx, 1;
@@ -175,7 +175,7 @@ ROCKETCORE_API int RealToInteger(float value)
 	loop2:
 		mov  i, eax;
 
-		// check sign +/- 
+		// check sign +/-
 		mov  eax, value;
 		and  eax, 80000000h;
 		cmp  eax, 80000000h;

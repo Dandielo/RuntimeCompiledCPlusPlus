@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -60,7 +60,7 @@ int StyleSheetParser::Parse(StyleSheetNode* node, Stream* _stream)
 	while (FillBuffer())
 	{
 		String style_names;
-		
+
 		while (FindToken(style_names, "{", true))
 		{
 			// Read the attributes
@@ -79,7 +79,7 @@ int StyleSheetParser::Parse(StyleSheetNode* node, Stream* _stream)
 
 			rule_count++;
 		}
-	}	
+	}
 
 	return rule_count;
 }
@@ -95,7 +95,7 @@ bool StyleSheetParser::ParseProperties(PropertyDictionary& parsed_properties, co
 
 bool StyleSheetParser::ReadProperties(PropertyDictionary& properties)
 {
-	int rule_line_number = line_number;
+	int rule_line_number = (int)(line_number);
 	String name;
 	String value;
 
@@ -137,7 +137,7 @@ bool StyleSheetParser::ReadProperties(PropertyDictionary& properties)
 					name.Append(character);
 			}
 			break;
-			
+
 			case VALUE:
 			{
 				if (character == ';')
@@ -179,7 +179,7 @@ bool StyleSheetParser::ReadProperties(PropertyDictionary& properties)
 
 	if (!name.Empty() || !value.Empty())
 		Log::Message(Log::LT_WARNING, "Invalid property declaration at %s:%d", stream_file_name.CString(), line_number);
-	
+
 	return true;
 }
 
@@ -193,7 +193,7 @@ bool StyleSheetParser::ImportProperties(StyleSheetNode* node, const String& name
 	StringUtilities::ExpandString(nodes, names, ' ');
 
 	// Create each node going down the tree
-	for (size_t i = 0; i < nodes.size(); i++)
+	for (uint32_t i = 0; i < nodes.size(); i++)
 	{
 		String name = nodes[i];
 
@@ -203,11 +203,11 @@ bool StyleSheetParser::ImportProperties(StyleSheetNode* node, const String& name
 		StringList pseudo_classes;
 		StringList structural_pseudo_classes;
 
-		size_t index = 0;
+		uint32_t index = 0;
 		while (index < name.Length())
 		{
-			size_t start_index = index;
-			size_t end_index = index + 1;
+			uint32_t start_index = index;
+			uint32_t end_index = index + 1;
 
 			// Read until we hit the next identifier.
 			while (end_index < name.Length() &&
@@ -335,7 +335,7 @@ bool StyleSheetParser::ReadCharacter(char& buffer)
 							return true;
 						}
 					}
-					
+
 					if (parse_buffer[parse_buffer_pos] == '*')
 						comment = true;
 					else
