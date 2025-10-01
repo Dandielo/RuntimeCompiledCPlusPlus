@@ -21,12 +21,12 @@ include(cmake/ProjectFiles.cmake)
 #
 # RuntimeCompiler
 #
-add_library(RuntimeCompiler ${BUILD_TYPE} ${RuntimeCompiler_SRCS})
+add_library(RuntimeCompiler ${BUILD_TYPE} ${RuntimeCompiler_Files})
 
 #
 # RuntimeObjectSystem
 #
-add_library(RuntimeObjectSystem ${BUILD_TYPE} ${RuntimeObjectSystem_SRCS})
+add_library(RuntimeObjectSystem ${BUILD_TYPE} ${RuntimeObjectSystem_Files})
 target_link_libraries(RuntimeObjectSystem RuntimeCompiler)
 if(UNIX)
 	target_link_libraries(RuntimeObjectSystem dl)
