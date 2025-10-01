@@ -58,7 +58,7 @@ struct ObjectId
 	{
 		return (m_ConstructorId != InvalidId && m_PerTypeId != InvalidId);
 	}
-	void SetInvalid() 
+	void SetInvalid()
 	{
 		m_ConstructorId = InvalidId;
 		m_PerTypeId = InvalidId;
@@ -66,6 +66,7 @@ struct ObjectId
 };
 
 struct RuntimeTackingInfo;
+typedef void(*ObjectDestructor)(IObject*);
 
 struct IObjectConstructor
 {
@@ -86,6 +87,9 @@ struct IObjectConstructor
     {
         return Construct();
     }
+
+	// Lifetime management
+	virtual ObjectDestructor GetDestructor() const = 0; // Accessing the destructor paired with the constructor
 
 	virtual IObject* GetConstructedObject( PerTypeObjectId num ) const = 0;	//should return 0 for last or deleted object
 	virtual size_t	 GetNumberConstructedObjects() const = 0;

@@ -69,7 +69,7 @@ public:
 #endif
     }
 
-	// Utility functions to GetOSCanonicalCleanPath without including filesystemutils in this header 
+	// Utility functions to GetOSCanonicalCleanPath without including filesystemutils in this header
 	static std::string GetOSCanonicalCleanPath( const char* filename_, const char* compilePath_ );
 	static std::string GetOSCanonicalCleanPath( const char* filename_ );
 
@@ -227,6 +227,15 @@ public:
         return m_bIsSingleton && m_bIsAutoConstructSingleton;
     }
 
+	static void DefaultObjectDestructor(IObject* object)
+	{
+		delete object;
+	}
+
+	virtual ObjectDestructor GetDestructor() const
+	{
+		return DefaultObjectDestructor;
+	}
 
 	virtual IObject* GetConstructedObject( PerTypeObjectId id ) const
 	{

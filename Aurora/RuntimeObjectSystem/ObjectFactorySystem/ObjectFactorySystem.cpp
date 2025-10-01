@@ -71,7 +71,7 @@ void ObjectFactorySystem::ProtectedObjectSwapper::ProtectedFunc()
 			if (pOldObject)
 			{
 				m_Serializer.Serialize( pOldObject );
-			}		
+			}
 		}
 	}
 	// swap serializer
@@ -203,6 +203,7 @@ void ObjectFactorySystem::ProtectedObjectSwapper::ProtectedFunc()
 			//TODO: could put a constructor around this.
 			//constructor has been replaced
 			IObjectConstructor* pOldConstructor = m_ConstructorsOld[i];
+			ObjectDestructor pOldDestructor = pOldConstructor->GetDestructor();
 			size_t numObjects = pOldConstructor->GetNumberConstructedObjects();
 			for( size_t j = 0; j < numObjects; ++j )
 			{
@@ -210,7 +211,7 @@ void ObjectFactorySystem::ProtectedObjectSwapper::ProtectedFunc()
 				if( pOldObject )
 				{
 					pOldObject->_isRuntimeDelete = true;
-					delete pOldObject;
+					pOldDestructor(pOldObject);
 				}
 			}
 			pOldConstructor->ClearIfAllDeleted();
@@ -336,7 +337,7 @@ void ObjectFactorySystem::CompleteConstructorSwap( ProtectedObjectSwapper& swapp
 					if (pObject)
 					{
 						swapper.m_Serializer.Serialize( pObject );
-					}			
+					}
 				}
 			}
 
@@ -350,7 +351,7 @@ void ObjectFactorySystem::CompleteConstructorSwap( ProtectedObjectSwapper& swapp
 					if (pObject)
 					{
 						pObject->Init(false);
-					}			
+					}
 				}
 			}
 		}
