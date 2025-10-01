@@ -1,3 +1,7 @@
+# Fork Specific
+.conantools/
+run.bat
+
 # binaries
 *.exe
 *.o
