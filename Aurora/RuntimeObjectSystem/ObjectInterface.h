@@ -20,6 +20,10 @@
 #ifndef OBJECTINTERFACE_INCLUDED
 #define OBJECTINTERFACE_INCLUDED
 
+#ifndef RCCPP_ALLOCATOR_INTERFACE
+#define RCCPP_ALLOCATOR_INTERFACE 0
+#endif
+
 #include <vector>
 #include <stdlib.h>
 
@@ -65,11 +69,26 @@ struct ObjectId
 	}
 };
 
+#if RCCPP_ALLOCATOR_INTERFACE
+struct IObjectAllocator
+{
+	virtual ~IObjectAllocator() = default;
+	virtual void* Allocate( size_t size, size_t alignment ) = 0;
+	virtual void Free( void* p ) = 0;
+};
+#endif
+
 struct RuntimeTackingInfo;
 typedef void(*ObjectDestructor)(IObject*);
 
 struct IObjectConstructor
 {
+#if RCCPP_ALLOCATOR_INTERFACE
+	// Memory management
+	virtual IObjectAllocator* GetAllocator() const = 0;
+	virtual void SetAllocator( IObjectAllocator* pAllocator ) = 0;
+#endif
+
 	virtual IObject* Construct() = 0;
 	virtual void ConstructNull() = 0;	//for use in object replacement, ensures a deleted object can be replaced
 	virtual const char* GetName() = 0;
