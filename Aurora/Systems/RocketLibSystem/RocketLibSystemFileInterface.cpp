@@ -64,7 +64,7 @@ size_t RocketLibSystemFileInterface::Read(void* buffer, size_t size, Rocket::Cor
 // Seeks to a point in a previously opened file.
 bool RocketLibSystemFileInterface::Seek(Rocket::Core::FileHandle file, size_t offset, int origin)
 {
-	return fseek((FILE*) file, offset, origin) == 0;
+	return fseek((FILE*) file, (long)offset, origin) == 0;
 }
 
 // Returns the current position of the file pointer.

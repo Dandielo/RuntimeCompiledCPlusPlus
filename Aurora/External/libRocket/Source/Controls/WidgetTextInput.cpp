@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -40,7 +40,7 @@ const float CURSOR_BLINK_TIME = 0.7f;
 WidgetTextInput::WidgetTextInput(ElementFormControl* _parent) : internal_dimensions(0, 0), scroll_offset(0, 0), cursor_position(0, 0), cursor_size(0, 0), cursor_geometry(_parent), selection_geometry(_parent)
 {
 	keyboard_showed = false;
-	
+
 	parent = _parent;
 	parent->SetProperty("white-space", "pre");
 	parent->SetProperty("overflow", "hidden");
@@ -347,7 +347,7 @@ void WidgetTextInput::ProcessEvent(Core::Event& event)
                 if (ctrl)
                 {
     				const Core::WString clipboard_content = Clipboard::Get();
-    				for (size_t i = 0; i < clipboard_content.Length(); ++i)
+    				for (uint32_t i = 0; i < clipboard_content.Length(); ++i)
     				{
     					if (max_length > 0 &&
     						(int) Core::WString(GetElement()->GetAttribute< Rocket::Core::String >("value", "")).Length() < max_length)
@@ -397,7 +397,7 @@ void WidgetTextInput::ProcessEvent(Core::Event& event)
 	{
 		ClearSelection();
 		ShowCursor(false, false);
-	}	
+	}
 	else if ((event == "mousedown" ||
 			  event == "drag") &&
 			 event.GetTargetElement() == parent)
@@ -634,7 +634,7 @@ void WidgetTextInput::ShowCursor(bool show, bool move_to_cursor)
 		cursor_visible = true;
 		SetKeyboardActive(true);
 		keyboard_showed = true;
-		
+
 		cursor_timer = CURSOR_BLINK_TIME;
 		last_update_time = Core::GetSystemInterface()->GetElapsedTime();
 
@@ -973,15 +973,15 @@ void WidgetTextInput::SetKeyboardActive(bool active)
 {
 	Core::SystemInterface* system = Core::GetSystemInterface();
 	if (system) {
-		if (active) 
+		if (active)
 		{
 			system->ActivateKeyboard();
-		} else 
+		} else
 		{
 			system->DeactivateKeyboard();
 		}
 	}
 }
-	
+
 }
 }

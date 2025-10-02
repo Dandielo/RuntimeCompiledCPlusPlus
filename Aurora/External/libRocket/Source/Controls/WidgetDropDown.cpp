@@ -14,7 +14,7 @@
  *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -277,7 +277,7 @@ int WidgetDropDown::GetNumOptions() const
 
 void WidgetDropDown::ProcessEvent(Core::Event& event)
 {
-	if (parent_element->IsDisabled()) 
+	if (parent_element->IsDisabled())
 		return;
 
 	// Process the button onclick
@@ -287,7 +287,7 @@ void WidgetDropDown::ProcessEvent(Core::Event& event)
 		if (event.GetCurrentElement()->GetParentNode() == selection_element)
 		{
 			// Find the element in the options and fire the selection event
-			for (size_t i = 0; i < options.size(); i++)
+			for (int i = 0; i < options.size(); i++)
 			{
 				if (options[i].GetElement() == event.GetCurrentElement())
 				{
@@ -320,7 +320,7 @@ void WidgetDropDown::ProcessEvent(Core::Event& event)
 				ShowSelectBox(true);
 			else
 				ShowSelectBox(false);
-		}		
+		}
 	}
 	else if (event == "blur" && event.GetTargetElement() == parent_element)
 	{
@@ -335,7 +335,7 @@ void WidgetDropDown::ProcessEvent(Core::Event& event)
 			case Core::Input::KI_UP:
 				SetSelection( (selected_option - 1 + options.size()) % options.size() );
 				break;
-			case Core::Input::KI_DOWN:		
+			case Core::Input::KI_DOWN:
 				SetSelection( (selected_option + 1) % options.size() );
 				break;
 			default:
